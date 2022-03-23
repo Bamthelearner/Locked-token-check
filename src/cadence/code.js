@@ -7,7 +7,7 @@ import BloctoPass from 0x0f9df91c9121c460
 pub fun main( addr: Address) : [UFix64] {
 
   let ref = getAccount(addr).getCapability<&{NonFungibleToken.CollectionPublic, BloctoPass.CollectionPublic}>(BloctoPass.CollectionPublicPath)
-            .borrow() ?? panic ("You dont have a Blocto Pass")
+            .borrow() ?? return[]
   
   let ids = ref.getIDs()
   let length = UInt64(ref.getIDs().length) - 1
