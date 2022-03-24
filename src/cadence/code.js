@@ -6,9 +6,16 @@ import BloctoPass from 0x0f9df91c9121c460
 
 pub fun main( addr: Address) : [UFix64] {
 
+
+  if  getAccount(addr).getCapability<&{NonFungibleToken.CollectionPublic, BloctoPass.CollectionPublic}>(BloctoPass.CollectionPublicPath).borrow() == nil {
+    return []
+  }
+
   let ref = getAccount(addr).getCapability<&{NonFungibleToken.CollectionPublic, BloctoPass.CollectionPublic}>(BloctoPass.CollectionPublicPath)
-            .borrow() ?? return[]
+            .borrow() ?? panic("Cannot get reference to Blocto Token Lock")
   
+
+
   let ids = ref.getIDs()
   let length = UInt64(ref.getIDs().length) - 1
   let id = ids[length]
